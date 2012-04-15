@@ -7,7 +7,7 @@ import requests
 from PIL import Image
 from StringIO import StringIO
 
-SERVER_PREFIX = 'http://localhost:8000/'
+SERVER_PREFIX = 'http://localhost:5000/'
 
 @step(u'Given /(.*)/\?url=(.*)&width=(\d+)&height=(\d+)')
 def given_engine_url_url_width_width_height_height(step, engine, url, width, height):
