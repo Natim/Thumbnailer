@@ -15,7 +15,7 @@ def resize():
     url = request.args.get('url', None)
     width = int(request.args.get('width', 800))
     height = int(request.args.get('height', 600))
-    opts = request.args.get('opts', '')
+    opts = [x.strip() for x in request.args.get('opts', 'crop').split(',')]
     if url:
         response = requests.get(url)
         image = Image.open(StringIO(response.content))
