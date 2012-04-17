@@ -1,5 +1,39 @@
 # -*- coding: utf-8 -*-
 from PIL import Image
+from engines.utils import download_from_url
+from functools import wraps
+
+from StringIO import StringIO
+
+def create_engine(view_func):
+    """
+    Create the specific engine
+    """
+    @wraps(view_func)
+    def __wrapped_view(url, width, height):
+        im = Image.open(download_from_url(url))
+        version = view_func(im, width, height)
+        thumb = StringIO()
+        version.save(thumb, 'PNG')
+        return thumb.getvalue()
+
+    return __wrapped_view
+        
+@create_engine
+def scale(*args, **kwargs):
+    kwargs['opts'] = []
+    return scale_and_crop(*args, **kwargs)
+        
+@create_engine
+def crop(*args, **kwargs):
+    kwargs['opts'] = ['crop']
+    return scale_and_crop(*args, **kwargs)
+        
+@create_engine
+def upscale(*args, **kwargs):
+    kwargs['opts'] = ['crop', 'upscale']
+    return scale_and_crop(*args, **kwargs)
+
 
 def scale_and_crop(im, width, height, opts):
     """
@@ -38,15 +72,3 @@ def scale_and_crop(im, width, height, opts):
     return im
     
 scale_and_crop.valid_options = ('crop', 'upscale')
-
-def scale(*args, **kwargs):
-    kwargs['opts'] = []
-    return scale_and_crop(*args, **kwargs)
-
-def crop(*args, **kwargs):
-    kwargs['opts'] = ['crop']
-    return scale_and_crop(*args, **kwargs)
-
-def upscale(*args, **kwargs):
-    kwargs['opts'] = ['crop', 'upscale']
-    return scale_and_crop(*args, **kwargs)

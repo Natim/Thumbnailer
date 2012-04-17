@@ -6,7 +6,7 @@ from PIL import Image
 from StringIO import StringIO
 import os.path
 
-from utils import scale, crop, upscale
+from engines import images, documents
 
 app = Flask(__name__)
 app.debug=True
@@ -14,9 +14,10 @@ app.debug=True
 GITHUB_HOME = 'http://github.com/Natim/Thumbnailer/'
 
 THUMBNAILER_ENGINE = {
-    'scale': scale,
-    'crop': crop,
-    'upscale': upscale
+    'scale': images.scale,
+    'crop': images.crop,
+    'upscale': images.upscale,
+    'document': documents.extract_image,
 }
 
 @app.route('/')
@@ -36,27 +37,16 @@ def resize(engine):
     if url:
         if url.startswith('/'):
             url = '%s%s' % (request.host_url, url[1:])
-        response = requests.get(url)
-        try:
-            image = Image.open(StringIO(response.content))
-        except IOError:
-            abort(400, u'This url is not an image')
     else:
         abort(404)
 
-    # 2. Resize the image
-    version = THUMBNAILER_ENGINE[engine](image, width, height)
-    if not version:
-        # If the image is smaller than the thumb
-        abort(400, u'Failed to resize the image with these parameters')
+    thumb = THUMBNAILER_ENGINE[engine](url, width, height)
 
     # 3. Returns the image
-    thumb = StringIO()
-    version.save(thumb, 'PNG')
-    response = make_response(thumb.getvalue())
+    response = make_response(thumb)
     response.content_type = 'image/png'
 
     return response
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     app.run()
