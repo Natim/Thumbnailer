@@ -1,0 +1,19 @@
+############
+Alternatives
+############
+
+This document lists services or projects that may provide similar functionality
+than the ``Thumbnailer`` project.
+
+********
+Services
+********
+
+* http://www.webresourcesdepot.com/10-free-website-thumbnail-generation-services/
+
+***************
+Python packages
+***************
+
+* http://pypi.python.org/pypi?%3Aaction=search&term=thumbnail&submit=search
+* http://pypi.python.org/pypi?%3Aaction=search&term=preview&submit=search

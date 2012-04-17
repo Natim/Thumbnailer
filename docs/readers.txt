@@ -1,0 +1,11 @@
+#######
+Readers
+#######
+
+The thumbnail generation service uses readers to retrieve original documents.
+Readers return document in an adequate format for :doc:`engines`.
+
+Available readers:
+
+* default reader: reads an image identified by an URL. Returns a PIL.Image
+  ressource.

@@ -1,0 +1,24 @@
+########
+Features
+########
+
+This document presents features of the ``Thumbnailer`` project.
+
+As described in :doc:`/vision`, the project is an ecosystem made of several
+components. So some features are, in fact, features of ecosystem parts.
+
+************
+Key features
+************
+
+* Open source;
+* Simple but powerful API;
+* Extensible;
+* Easy to deploy.
+
+**************
+Specifications
+**************
+
+.. literalinclude:: ../tests/features/zero.feature
+   :language: gherkin

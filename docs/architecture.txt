@@ -1,0 +1,57 @@
+############
+Architecture
+############
+
+This document presents typical architecture components of the ``Thumbnailer``
+ecosystem.
+
+****************************
+Thumbnail generation service
+****************************
+
+This is ``Thumbnailer``'s core.
+
+As input or configuration, the thumbnail generation service uses:
+
+* a reader: gets the original resource and passes it as adequate input to the
+  engine. Example: read an image identified by an URL. Learn more at
+  :doc:`readers`.
+* an engine: transforms the input. Example: resize an image. Learn more at
+  :doc:`engines`.
+* engine parameters: options that the engine understands. Example: width and
+  height of the thumbnail.
+* a writer: puts the result of the operation somewhere. Example: returns the
+  thumbnail in an HTTP response. Learn more at :doc:`writers`.
+
+****************
+Thumbnails cache
+****************
+
+Optional (but strongly recommended) component to improve performance and
+scalability.
+
+If a thumbnail already exists in cache, serve it from cache.
+
+When a new thumbnail is generated, store it in cache.
+
+*********************************
+Asynchronous thumbnail generation
+*********************************
+
+Optional components to be able to generate thumbnails asynchronously.
+
+Provider
+========
+
+Emits requests of asynchronous thumbnail generation.
+
+Broker
+======
+
+The brokers holds the queue of thumbnails to generate.
+
+Worker
+======
+
+Consumes the broker's queue, communicates with the thumbnail generation
+service.

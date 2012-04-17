@@ -3,18 +3,40 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to Thumbnailer's documentation!
-=======================================
+###########
+Thumbnailer
+###########
 
-Contents:
+``Thumbnailer`` is an ecosystem around thumbnails:
+
+1. a thumbnail generation service, i.e. a web application providing an API;
+2. tools to integrate the service in your favorite framework, i.e. template
+   tag for Django;
+3. various recipes to easily generate, host and serve thumbnails, i.e. server
+   configuration samples and deployment scripts.
+
+********
+Contents
+********
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
+   vision
+   alternatives
+   features
+   architecture
+   readers
+   engines
+   writers
+   INSTALL
+   dev/index
+   LICENSE
+   AUTHORS
 
-
+******************
 Indices and tables
-==================
+******************
 
 * :ref:`genindex`
 * :ref:`modindex`

@@ -1,0 +1,53 @@
+#################
+About Thumbnailer
+#################
+
+This document presents the vision of the ``Thumbnailer`` project, as shared by
+:doc:`AUTHORS`.
+
+****************
+Why thumbnailer?
+****************
+
+Thumbnail generation is a feature often used on websites. As developers, we
+**do not want**:
+
+* to install and configure thumbnail-related modules, again and again, on every
+  project we start.
+* to use a different solution for every framework we use to build a website.
+* to deal with deployment.
+* thumbnail generation to downgrade our overall website performance.
+* increase server's memory just to be able to perform operations on images.
+
+Moreover, as internauts, we **do not want**:
+
+* to manually edit images before we publish them.
+* to install some image edition software just to create thumbnails.
+
+That's why **we need a thumbnail generation service**.
+
+Some :doc:`alternatives` exist, but ``Thumbnailer`` has the following valuable
+features:
+
+* Open-source. It can be used to create a hosted thumbnail service (saas), but
+  you are also free to deploy it on your own infrastructure if you want.
+* Extensible. Create, plug and configure :doc:`engines`, :doc:`writers` and
+  :doc:`readers`.
+* Full ecosystem. If you want to manage your own thumbnail generation service,
+  ``Thumbnailer`` provides ready-to-use recipes, including thumbnail
+  generation, serving, caching...
+* Generate thumbnails out of almost any document. Input can be images, PDF
+  files, HTML pages, ...
+
+However, this version of is still a proof of concept: all features aren't
+available yet.
+
+******************
+Development status
+******************
+
+``Thumbnailer`` is under active development. 
+
+Currently, ``Thumbnailer`` project may contain parts of the ecosystem, so that
+it forms a product. Later, this project may be limited to the glue between
+ecosystem parts, these components being shipped as external projects.

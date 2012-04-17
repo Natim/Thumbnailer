@@ -1,0 +1,29 @@
+#################################
+Install a development environment
+#################################
+
+Here are guidelines to get a development environment.
+
+******************
+Generic guidelines
+******************
+
+Dependencies
+============
+
+* Python-2.7. You may use a virtual environment.
+
+Install
+=======
+
+.. code-block:: sh
+
+  # Download project from original repository... or use your own fork.
+  git clone https://github.com/Natim/Thumbnailer.git
+  cd Thumbnailer/
+  # Install Thumbnailer base with zc.buildout.
+  python lib/buildout/bootstrap.py --distribute
+  bin/buildout -N
+  # Install standard development tools.
+  bin/buildout -N install development
+  # That's all!
