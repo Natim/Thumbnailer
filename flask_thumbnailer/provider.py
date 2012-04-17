@@ -30,7 +30,7 @@ def resize(engine):
     width = int(request.args.get('width', 0))
     height = int(request.args.get('height', 0))
 
-    if width == height == 0:
+    if width == 0 and height == 0:
         abort(400, u'You must set either width or height')
 
     if url:
