@@ -60,6 +60,33 @@ Name
 
 Brainstorm... Name of repository is temporary.
 
+*************************
+Installation Instructions
+*************************
+
+To run the provider you will need :
+
+* Flask
+* requests 
+
+    pip install flask request
+
+To use image thumbs you need :
+
+* Python Imaging Library
+
+    pip install PIL
+
+To use document thumbs you need :
+
+* Docsplit
+
+    # aptitude install rubygems graphicsmagick poppler-utils pdftk
+    # gem install docsplit
+
+    $ pip install pydocsplit
+
+
 ***
 API
 ***
@@ -90,3 +117,14 @@ Upscale the input image if it is too little for a crop
     > curl -o thumb_upscale.png 'http://localhost:5000/upscale/?url=http://localhost:8000/images/horizontal.jpg&width=200&height=150'
 
     < 200 OK + image/png thumb with an upscale crop at size 200x150
+
+document
+========
+
+Thumb a PDF file at the wanted size
+
+    > curl -o thumb_pdf.png 'http://localhost:5000/document/?url=http://localhost:8000/document/document.pdf&width=200&height=150'
+
+    < 200 OK + image/png thumb with an upscale crop at max size 200x150
+
+
