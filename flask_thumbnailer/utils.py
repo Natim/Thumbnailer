@@ -38,3 +38,15 @@ def scale_and_crop(im, width, height, opts):
     return im
     
 scale_and_crop.valid_options = ('crop', 'upscale')
+
+def scale(*args, **kwargs):
+    kwargs['opts'] = []
+    return scale_and_crop(*args, **kwargs)
+
+def crop(*args, **kwargs):
+    kwargs['opts'] = ['crop']
+    return scale_and_crop(*args, **kwargs)
+
+def upscale(*args, **kwargs):
+    kwargs['opts'] = ['crop', 'upscale']
+    return scale_and_crop(*args, **kwargs)

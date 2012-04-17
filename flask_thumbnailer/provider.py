@@ -6,18 +6,24 @@ from PIL import Image
 from StringIO import StringIO
 import os.path
 
-from utils import scale_and_crop
+from utils import scale, crop, upscale
 
 app = Flask(__name__)
 app.debug=True
 
-@app.route('/resize/')
-def resize():
+THUMBNAILER_ENGINE = {
+    'scale': scale,
+    'crop': crop,
+    'upscale': upscale
+}
+
+@app.route('/<engine>/')
+def resize(engine):
     # 1. Get the image or raise 404
     url = request.args.get('url', None)
-    width = int(request.args.get('width', 800))
-    height = int(request.args.get('height', 600))
-    opts = [x.strip() for x in request.args.get('opts', 'crop').split(',')]
+    width = int(request.args.get('width', 0))
+    height = int(request.args.get('height', 0))
+
     if url:
         if url.startswith('/'):
             url = '%s%s' % (request.host_url, url[1:])
@@ -30,8 +36,9 @@ def resize():
         abort(404)
 
     # 2. Resize the image
-    version = scale_and_crop(image, width, height, opts)
+    version = THUMBNAILER_ENGINE[engine](image, width, height)
     if not version:
+        # If the image is smaller than the thumb
         abort(400, u'Failed to resize the image with these parameters')
 
     # 3. Returns the image
@@ -39,6 +46,7 @@ def resize():
     version.save(thumb, 'PNG')
     response = make_response(thumb.getvalue())
     response.content_type = 'image/png'
+
     return response
 
 if __name__ == '__main__':

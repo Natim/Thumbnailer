@@ -3,12 +3,26 @@ Feature: Get a thumbnail
   As a user
   I want to send access an url and get my thumbnail
 
-  Scenario: With an url
+  Scenario: With an image to resize into a box
+    Given /<engine>/?url=<url>&width=<width>&height=<height>
+	When I access the api url
+	Then I get my image at max size <width>x<height>
+    
+	Examples:
+      | engine | url											| width | height |
+      | scale  | http://localhost:8000/images/horizontal.jpg    |  800  |  600   |
+      | scale  | http://localhost:8000/images/vertical.jpg		|  200  |  300   |
+      | scale  | http://localhost:8000/images/vertical.jpg		|  200  |    0   |
+      | scale  | http://localhost:8000/images/vertical.jpg		|    0  |  200   |
+
+  Scenario: With an image to crop
     Given /<engine>/?url=<url>&width=<width>&height=<height>
 	When I access the api url
 	Then I get my image at size <width>x<height>
     
 	Examples:
-      | engine | url                                   | width | height |
-      | resize | http://localhost:8000/images/toto.jpg |  800  |  600   |
-      | resize | http://localhost:8000/images/toto.jpg |  200  |  300   |
+      | engine  | url                                         | width | height |
+      | crop    | http://localhost:8000/images/horizontal.jpg |  800  |  600   |
+      | crop    | http://localhost:8000/images/vertical.jpg   |  200  |  300   |
+      | upscale | http://localhost:8000/images/horizontal.jpg |  600  |  600   |
+      | upscale | http://localhost:8000/images/vertical.jpg   |  600  |  500   |
