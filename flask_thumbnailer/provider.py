@@ -1,4 +1,4 @@
-from flask import abort, Flask, request, make_response
+from flask import abort, Flask, request, make_response, redirect
 
 import requests
 
@@ -11,11 +11,17 @@ from utils import scale, crop, upscale
 app = Flask(__name__)
 app.debug=True
 
+GITHUB_HOME = 'http://github.com/Natim/Thumbnailer/'
+
 THUMBNAILER_ENGINE = {
     'scale': scale,
     'crop': crop,
     'upscale': upscale
 }
+
+@app.route('/')
+def home():
+    return redirect(GITHUB_HOME)
 
 @app.route('/<engine>/')
 def resize(engine):
@@ -23,6 +29,9 @@ def resize(engine):
     url = request.args.get('url', None)
     width = int(request.args.get('width', 0))
     height = int(request.args.get('height', 0))
+
+    if width == height == 0:
+        abort(400, u'You must set either width or height')
 
     if url:
         if url.startswith('/'):
