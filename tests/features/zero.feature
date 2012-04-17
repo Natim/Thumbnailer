@@ -9,5 +9,6 @@ Feature: Get a thumbnail
 	Then I get my image at size <width>x<height>
     
 	Examples:
-      | engine | url                            | width | height |
-      | resize | http://localhost:8000/toto.jpg |  800  |  600   |
+      | engine | url                                   | width | height |
+      | resize | http://localhost:8000/images/toto.jpg |  800  |  600   |
+      | resize | http://localhost:8000/images/toto.jpg |  200  |  300   |
