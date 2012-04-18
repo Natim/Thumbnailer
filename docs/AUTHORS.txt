@@ -2,5 +2,5 @@
 Authors and contributors
 ########################
 
-* `Rémy Hubscher <http://www.example.com>`_
-* `Benoît Bryon <http://www.marmelune.net>`_
+* `Rémy Hubscher <remy.hubscher@ionyse.com> <http://www.ionyse.com>`_
+* `Benoît Bryon <benoit@marmelune.net> <http://www.marmelune.net>`_

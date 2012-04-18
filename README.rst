@@ -36,6 +36,8 @@ See ``docs/`` folder for detailed documentation, including:
 * contributor guidelines
 * and more...
 
+Read online at : http://thumbnailer.readthedocs.org/
+
 ***************
 Other resources
 ***************

@@ -11,7 +11,7 @@ To run the provider you will need:
 
 .. code-block:: sh
 
-  pip install flask request
+  pip install flask requests
 
 To use image thumbs you need:
 
