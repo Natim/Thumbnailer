@@ -1,0 +1,60 @@
+#######
+Engines
+#######
+
+The thumbnail generation service uses engines to transform original documents
+into thumbnails.
+Engines take input from :doc:`readers`, process them then pass result to
+:doc:`writers`.
+
+Engines also accept parameters. Typical parameters are width and height of the
+thumbnail.
+
+*****************
+Available engines
+*****************
+
+scale
+=====
+
+Scale the input image to enter the box, if either width or height are empty,
+it will scale to fit provided value.
+
+::
+
+  > curl -o thumb_scale.png 'http://localhost:5000/scale/?url=http://localhost:8000/images/horizontal.jpg&width=200&height=150'
+
+  < 200 OK + image/png thumb with max size 200x150
+
+crop
+====
+
+Crop the input image at the right size.
+
+::
+
+  > curl -o thumb_crop.png 'http://localhost:5000/crop/?url=http://localhost:8000/images/horizontal.jpg&width=200&height=150'
+
+  < 200 OK + image/png thumb with a center crop at size 200x150
+
+upscale
+=======
+
+Upscale the input image if it is too little for a crop.
+
+::
+
+  > curl -o thumb_upscale.png 'http://localhost:5000/upscale/?url=http://localhost:8000/images/horizontal.jpg&width=200&height=150'
+
+  < 200 OK + image/png thumb with an upscale crop at size 200x150
+
+document
+========
+
+Thumb a PDF file at the wanted size:
+
+::
+
+  > curl -o thumb_pdf.png 'http://localhost:5000/document/?url=http://localhost:8000/document/document.pdf&width=200&height=150'
+
+  < 200 OK + image/png thumb with an upscale crop at max size 200x150

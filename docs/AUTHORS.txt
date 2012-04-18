@@ -1,0 +1,6 @@
+########################
+Authors and contributors
+########################
+
+* `Rémy Hubscher <http://www.example.com>`_
+* `Benoît Bryon <http://www.marmelune.net>`_

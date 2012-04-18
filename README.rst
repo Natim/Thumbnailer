@@ -1,130 +1,43 @@
-############################
-Service / API for thumbnails
-############################
+#########################################
+Thumbnailer: thumbnail generation service
+#########################################
 
-Draft for the documentation, specs, and tasks...
-May be moved to some github repository: https://github.com/Natim/Thumbnailer
+Thumbnails made easy.
 
-Table of contents:
-
-* Vision (share concept and goals)
-* Alternatives (don't reinvent the wheel)
-* Find a name (brainstorm)
-* Specs & examples
-
-******
-Vision
-******
-
+********
 Abstract
-========
+********
 
-An ecosystem around thumbnails:
+``Thumbnailer`` is an ecosystem around thumbnails:
 
-1. a ready to use service around thumbnails.
-2. recipes to generate, host, serve and reference thumbnails.
-
-Creating thumbnails/previews of any documents (images, PDF, html... or any URL) is a killer feature.
-
-Features
-========
-
-* Open source.
-* Hosted or install-it-at-home.
-* Provide an API where, given an URL and some parameters, you get a thumbnail (images) or some preview (documents?).
-* Provide plugins and/or API so that it is easy to use the thumbnail generation service in your favorite framework (i.e. some template tag for Django)
-* Provide recipes to build a stable and efficient architecture to serve thumbnails (i.e. charm for juju, varnish config, ...)
-* Ability to choose/plugin engines: resize, crop, zoom...
-* Form to get thumbnail URL: given an engine and parameters (at least an URL)
+1. a thumbnail generation service, i.e. a web application providing an API;
+2. tools to integrate the service in your favorite framework, i.e. template
+   tag for Django;
+3. various recipes to easily generate, host and serve thumbnails, i.e. server
+   configuration samples and deployment scripts.
 
 ************
-Alternatives
+Key features
 ************
 
-List of services or apps that provide similar functionality.
+* Open source;
+* Simple but powerful API;
+* Easy to deploy;
+* Extensible: configure custom image processors, create your own plugins.
 
-Services
-========
+*************
+Documentation
+*************
 
-http://www.webresourcesdepot.com/10-free-website-thumbnail-generation-services/
+See ``docs/`` folder for detailed documentation, including:
 
-Python packages
-===============
+* full features list
+* alternatives
+* contributor guidelines
+* and more...
 
-http://pypi.python.org/pypi?%3Aaction=search&term=thumbnail&submit=search
-http://pypi.python.org/pypi?%3Aaction=search&term=preview&submit=search
+***************
+Other resources
+***************
 
-****
-Name
-****
-
-Brainstorm... Name of repository is temporary.
-
-*************************
-Installation Instructions
-*************************
-
-To run the provider you will need :
-
-* Flask
-* requests 
-
-    pip install flask request
-
-To use image thumbs you need :
-
-* Python Imaging Library
-
-    pip install PIL
-
-To use document thumbs you need :
-
-* Docsplit
-
-    # aptitude install rubygems graphicsmagick poppler-utils pdftk
-    # gem install docsplit
-
-    $ pip install pydocsplit
-
-
-***
-API
-***
-
-scale
-=====
-
-Scale the input image to enter the box, if either width or height are empty, it will scale on only one
-
-    > curl -o thumb_scale.png 'http://localhost:5000/scale/?url=http://localhost:8000/images/horizontal.jpg&width=200&height=150'
-
-    < 200 OK + image/png thumb with max size 200x150
-
-crop
-====
-
-Crop the input image at the right size
-
-    > curl -o thumb_crop.png 'http://localhost:5000/crop/?url=http://localhost:8000/images/horizontal.jpg&width=200&height=150'
-
-    < 200 OK + image/png thumb with a center crop at size 200x150
-
-upscale
-=======
-
-Upscale the input image if it is too little for a crop
-
-    > curl -o thumb_upscale.png 'http://localhost:5000/upscale/?url=http://localhost:8000/images/horizontal.jpg&width=200&height=150'
-
-    < 200 OK + image/png thumb with an upscale crop at size 200x150
-
-document
-========
-
-Thumb a PDF file at the wanted size
-
-    > curl -o thumb_pdf.png 'http://localhost:5000/document/?url=http://localhost:8000/document/document.pdf&width=200&height=150'
-
-    < 200 OK + image/png thumb with an upscale crop at max size 200x150
-
-
+Project's homepage is `https://github.com/Natim/Thumbnailer`_.

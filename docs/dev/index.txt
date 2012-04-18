@@ -1,0 +1,16 @@
+######################
+Development guidelines
+######################
+
+This section is about contributing to the ``Thumbnailer`` project.
+
+*****************
+Table of contents
+*****************
+
+.. toctree::
+   :maxdepth: 2
+
+   install
+   testing
+   documentation

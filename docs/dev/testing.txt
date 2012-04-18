@@ -1,0 +1,13 @@
+#######
+Testing
+#######
+
+How to run and write tests for ``Thumbnailer``.
+
+*********
+Run tests
+*********
+
+.. code-block:: sh
+
+  bin/lettuce

@@ -1,0 +1,15 @@
+#######
+Writers
+#######
+
+The thumbnail generation service uses writers to return thumbnails.
+Writers take result of :doc:`engines` as input, and:
+
+* actually put thumbnail content somewhere, typically in an HTTP response, but
+  could be on some storage.
+* return response to client, i.e. inform client of success or failure of the
+  request.
+
+Available writers:
+
+* default writer: gets a PIL.Image and returns a HTTP response.

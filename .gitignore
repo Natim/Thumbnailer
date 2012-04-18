@@ -1,0 +1,14 @@
+# Local binaries (they are generated).
+/bin/
+
+# Python files.
+*.pyc
+*.pyo
+*.egg-info
+
+# Buildout files, except bootstrap.py.
+/lib/buildout/*
+!/lib/buildout/bootstrap.py
+
+# Documentation builds.
+/docs/_build/

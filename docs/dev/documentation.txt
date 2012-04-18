@@ -1,0 +1,163 @@
+#################################
+Contributing to the documentation
+#################################
+
+This document presents documentation conventions and tools.
+
+This documentation uses `Python-sphinx`_. It uses `reStructuredText`_ syntax.
+
+***********
+Conventions
+***********
+
+Language
+========
+
+The documentation is written in english.
+
+Line length
+===========
+
+Limit all lines to a maximum of 79 characters whenever possible. Exceptions
+can be long URL or some literal blocks.
+
+Headings
+========
+
+Follow the `Sphinx's recommendation about sections`_.
+
+As an example:
+
+.. code-block:: rst
+
+  ##################
+  H1: document title
+  ##################
+
+  *********
+  Sample H2
+  *********
+
+  Sample H3
+  =========
+
+  Sample H4
+  ---------
+
+  And sample text.
+
+If you need more than H4, then consider creating a new document.
+
+Code blocks
+===========
+
+Use the ``code-block`` directive and explicitely specify the programming
+language.
+
+As an example:
+
+.. code-block:: rst
+
+  .. code-block:: python
+
+    import this
+
+Links and references
+====================
+
+On pages which are quite long, use links and references footnotes with the
+"target-notes" directive. As an example:
+
+.. code-block:: rst
+
+  #############
+  Some document
+  #############
+
+  Some text which includes links to `Example website`_ and many other links.
+
+  `Example website`_ can be referenced multiple times.
+
+  (... document content...)
+
+  And at the end of the document...
+
+  **********
+  References
+  **********
+
+  .. target-notes::
+
+  .. _`Example website`: http://www.example.com/
+
+This :doc:`documentation` page uses this syntax.
+
+**************
+Install Sphinx
+**************
+
+`Python-sphinx`_ installation is covered in :doc:`/dev/install`.
+
+In other cases, please refer to `Python-sphinx`_ documentation.
+
+****************************
+Export documentation to HTML
+****************************
+
+Go to ``docs/`` folder in ``Thumbnailer`` project and use the provided
+Makefile:
+
+.. code-block:: sh
+
+  cd docs/
+  make html
+  cd ..
+
+HTML documentation is exported to ``docs/_build/html/``.
+
+********
+Doctests
+********
+
+This documentation uses the `Sphinx's doctest extension`_.
+
+Write doctests
+==============
+
+Here is a RST code sample to write doctests.
+
+.. code-block:: rst
+
+  .. doctest::
+
+     >>> print "Hello world!"
+     Hello world!
+
+See `Sphinx's doctest extension`_ and `Python's doctest`_ documentations for
+details.
+
+Run doctests
+============
+
+Go to ``docs/`` folder in ``Thumbnailer`` project and use the provided
+Makefile:
+
+.. code-block:: sh
+
+  cd docs/
+  make doctests
+  cd ..
+
+**********
+References
+**********
+
+.. target-notes::
+
+.. _`Python-sphinx`: http://sphinx.pocoo.org/
+.. _`reStructuredText`: http://docutils.sourceforge.net/rst.html
+.. _`Sphinx's recommendation about sections`:
+   http://sphinx.pocoo.org/rest.html#sections
+.. _`Sphinx's doctest extension`:
+   http://sphinx.pocoo.org/ext/doctest.html#module-sphinx.ext.doctest
+.. _`Python's doctest`: http://docs.python.org/library/doctest.html

@@ -1,0 +1,32 @@
+############
+Installation
+############
+
+This document covers deployment of ``Thumbnailer`` project.
+
+To run the provider you will need:
+
+* Flask
+* requests 
+
+.. code-block:: sh
+
+  pip install flask request
+
+To use image thumbs you need:
+
+* Python Imaging Library
+
+.. code-block:: sh
+
+  pip install PIL
+
+To use document thumbs you need:
+
+* Docsplit
+
+.. code-block:: sh
+
+  aptitude install rubygems graphicsmagick poppler-utils pdftk
+  gem install docsplit
+  pip install pydocsplit
