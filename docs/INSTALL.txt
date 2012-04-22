@@ -2,31 +2,116 @@
 Installation
 ############
 
-This document covers deployment of ``Thumbnailer`` project.
+This document covers deployment of `Thumbnailer`_ project.
 
-To run the provider you will need:
+***********
+OS specific
+***********
 
-* Flask
-* requests 
+Here are repcipes for specific operating systems. They should help you go fast
+or automate installation procedure.
+
+Debian
+======
+
+The first lines in the following command define some variables. Adapt them to
+your needs.
 
 .. code-block:: sh
 
+  # Define some variables.
+  thumbnailer_dir=~/thumbnailer  # Installation directory.
+  thumbnailer_venv_dir=${thumbnailer_dir}  # Virtualenv
+  upstream_url="git://github.com/Natim/Thumbnailer.git"  # Main repository.
+  fork_url=${upstream_url}  # Your fork.
+  system-install() {  # Shortcut for system package installer.
+    su -c "aptitude install --without-recommends ${*}";
+  }
+  # Install base system dependencies.
+  system-install git-core python-virtualenv
+  # Download project.
+  git clone ${fork_url} ${thumbnailer_dir}
+  # Create a virtualenv and activate it.
+  virtualenv ${thumbnailer_dir}
+  cd ${thumbnailer_dir}
+  source bin/activate
+  # Install provider (server) requirements.
   pip install flask requests
-
-To use image thumbs you need:
-
-* Python Imaging Library
-
-.. code-block:: sh
-
+  # Install images engine requirements.
+  system-install libjpeg libjpeg-dev libfreetype6 libfreetype6-dev
+  system-install python-dev
   pip install PIL
+  # Install documents engine requirements.
+  system-install rubygems graphicsmagick poppler-utils pdftk ghostscript
+  su -c "gem install docsplit"
+  pip install -U pip  # Recent version of pip is required.
+  pip install git+https://github.com/anderser/pydocsplit@dev#egg=pydocsplit
 
-To use document thumbs you need:
+  # Done!
+  # Run the server.
+  make provider_server
 
-* Docsplit
+******************
+Generic guidelines
+******************
+
+System requirements
+===================
+
+Base
+----
+
+* `Python`_ 2.7
+* `Git`_
+
+Provider (server)
+-----------------
+
+* `Flask`_
+* `requests`_
+
+Images engine
+-------------
+
+* `Python Imaging Library`_ with JPEG and PNG support
+
+Documents engine
+----------------
+
+* **dev** branch of `pydocsplit`_ and its dependencies
+* `Ghostscript`_ (see `Graphicsmagicks add-on libraries installation notes`_)
+
+Get the source
+==============
 
 .. code-block:: sh
 
-  aptitude install rubygems graphicsmagick poppler-utils pdftk
-  gem install docsplit
-  pip install pydocsplit
+ git clone git@github.com:Natim/Thumbnailer.git
+
+Run
+===
+
+Use the provided Makefile to run the server:
+
+.. code-block:: sh
+
+  make runserver
+
+**********
+References
+**********
+
+.. target-notes::
+
+.. _`Thumbnailer`: https://github.com/Natim/Thumbnailer
+.. _`Python`: http://python.org/
+.. _`Git`: http://git-scm.com/
+.. _`Flask`: http://flask.pocoo.org/
+.. _`requests`: http://python-requests.org
+.. _`Python Imaging Library`: http://www.pythonware.com/products/pil
+.. _`pydocsplit`: https://github.com/anderser/pydocsplit/tree/dev/
+.. _`Ghostscript`: http://www.ghostscript.com/
+.. _`Graphicsmagicks add-on libraries installation notes`:
+   http://www.graphicsmagick.org/README.html#add-on-libraries-programs
+.. _`sphinx`: http://sphinx.pocoo.org
+.. _`lettuce`: http://pypi.python.org/pypi/lettuce
