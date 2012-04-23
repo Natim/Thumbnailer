@@ -3,7 +3,7 @@ STATIC_PID_FILE=run/static_server.pid
 PROVIDER_PID_FILE=run/provider_server.pid
 
 test: runserver
-	sleep 1
+	sleep 2
 	cd $(ROOT_DIR)/tests; lettuce
 
 runserver: kill_server static_server provider_server

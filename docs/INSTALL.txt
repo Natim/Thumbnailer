@@ -14,8 +14,8 @@ or automate installation procedure.
 Debian
 ======
 
-The first lines in the following command define some variables. Adapt them to
-your needs.
+The first lines in the following sh commands define some variables. Adapt
+them to your needs.
 
 .. code-block:: sh
 
@@ -27,6 +27,7 @@ your needs.
   system-install() {  # Shortcut for system package installer.
     su -c "aptitude install --without-recommends ${*}";
   }
+
   # Install base system dependencies.
   system-install git-core python-virtualenv
   # Download project.
@@ -38,7 +39,7 @@ your needs.
   # Install provider (server) requirements.
   pip install flask requests
   # Install images engine requirements.
-  system-install libjpeg libjpeg-dev libfreetype6 libfreetype6-dev
+  system-install libjpeg8 libjpeg8-dev libfreetype6 libfreetype6-dev
   system-install python-dev
   pip install PIL
   # Install documents engine requirements.
@@ -97,6 +98,14 @@ Use the provided Makefile to run the server:
 
   make runserver
 
+By default, Thumbnailer's serves:
+
+* static/ directory on port 8000. Try http://localhost:8000/
+* thumbnailer API on port 5000. Try
+  http://localhost:5000/scale/?url=http://localhost:8000/images/horizontal.jpg&width=100
+  and
+  http://localhost:5000/document/?url=http://localhost:8000/documents/document.pdf&width=400
+
 **********
 References
 **********
@@ -113,5 +122,3 @@ References
 .. _`Ghostscript`: http://www.ghostscript.com/
 .. _`Graphicsmagicks add-on libraries installation notes`:
    http://www.graphicsmagick.org/README.html#add-on-libraries-programs
-.. _`sphinx`: http://sphinx.pocoo.org
-.. _`lettuce`: http://pypi.python.org/pypi/lettuce
