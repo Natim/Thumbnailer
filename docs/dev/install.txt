@@ -4,6 +4,33 @@ Install a development environment
 
 Here are guidelines to get a development environment.
 
+* You should create a ticket on `Thumbnailer's bugtracker`_ **before** you
+  fork and hack. Maybe someone already has a solution to your problem or
+  feature request ;)
+* Fork original repository if you plan to perform a pull request.
+* Install ``Thumbnailer``, as explained in :doc:`/INSTALL`, except you use
+  your fork's URL.
+* Install additional Python development tools:
+
+  * `sphinx`_
+  * `lettuce`_
+
+  .. code-block:: sh
+
+    pip install sphinx lettuce
+
+* Run tests:
+
+  .. code-block:: sh
+
+    make test
+
+* Contribute:
+
+  * work in a separate branch, i.e. not in master. Prefix your branch name with
+    the bugtracker's ticket number, so that we can identify it quickly.
+  * hack, test, commit and pull request...
+
 ******************
 Generic guidelines
 ******************
@@ -27,3 +54,13 @@ Install
   # Install standard development tools.
   bin/buildout -N install development
   # That's all!
+
+**********
+References
+**********
+
+.. target-notes::
+
+.. _`Thumbnailer's bugtracker`: https://github.com/Natim/Thumbnailer/issues
+.. _`sphinx`: http://sphinx.pocoo.org/
+.. _`lettuce`: http://pypi.python.org/pypi/lettuce/
