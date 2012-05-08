@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from PIL import Image
-from engines.utils import download_from_url
+from thumbnailer.core.utils import download_from_url
 from functools import wraps
 
 from StringIO import StringIO

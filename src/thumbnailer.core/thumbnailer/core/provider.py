@@ -6,7 +6,8 @@ from PIL import Image
 from StringIO import StringIO
 import os.path
 
-from engines import images, documents
+from thumbnailer.engines.images import images
+from thumbnailer.engines.documents import documents
 
 app = Flask(__name__)
 app.debug=True
