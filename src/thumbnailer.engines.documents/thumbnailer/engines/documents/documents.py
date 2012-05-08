@@ -4,7 +4,7 @@ from pydocsplit.docsplit import Docsplit
 from pydocsplit.command_runner import RunError
 from tempfile import NamedTemporaryFile
 from StringIO import StringIO
-from engines.utils import download_from_url
+from thumbnailer.core.utils import download_from_url
 import shutil
 import os
 from glob import glob

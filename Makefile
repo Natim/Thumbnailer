@@ -12,7 +12,7 @@ static_server:
 	cd $(ROOT_DIR)/static; python -m SimpleHTTPServer & echo "$$!" > ../$(STATIC_PID_FILE)
 
 provider_server:
-	cd $(ROOT_DIR)/thumbnailer; python provider.py & echo "$$!" > ../$(PROVIDER_PID_FILE)
+	python src/thumbnailer.core/thumbnailer/core/provider.py & echo "$$!" > $(PROVIDER_PID_FILE)
 
 kill_server:
 #Kill server and child processus
