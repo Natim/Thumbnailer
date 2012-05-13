@@ -11,7 +11,7 @@ def read_relative_file(filename):
         return f.read()
 
 
-setup(name='thumbnailer',
+setup(name='thumbnailer.engines.same',
       version=read_relative_file('version.txt'),  # Follow zest.releaser
                                                   # convention.
       description='A service that take an url and returns a thumbnail',
@@ -32,14 +32,6 @@ setup(name='thumbnailer',
       include_package_data=True,
       zip_safe=False,
       install_requires=['setuptools',
-                        'Flask == 0.8',
-                        'Jinja2 == 2.6',
-                        'Werkzeug == 0.8.3',
-                        'certifi == 0.0.8',
-                        'chardet == 1.0.1',
-                        'requests == 0.11.1',
-                        'wsgiref == 0.1.2',
-                        'PIL == 1.1.7',
-                        'pydocsplit == 0.2.0',
+                        'thumbnailer',
                         ],
       entry_points="""""",)
