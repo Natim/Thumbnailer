@@ -36,8 +36,6 @@ them to your needs.
   virtualenv ${thumbnailer_dir}
   cd ${thumbnailer_dir}
   source bin/activate
-  # Install provider (server) requirements.
-  pip install flask requests
   # Install images engine requirements.
   system-install libjpeg8 libjpeg8-dev libfreetype6 libfreetype6-dev
   system-install python-dev
@@ -47,6 +45,8 @@ them to your needs.
   su -c "gem install docsplit"
   pip install -U pip  # Recent version of pip is required.
   pip install git+https://github.com/anderser/pydocsplit@dev#egg=pydocsplit
+  # Install thumbnailer
+  python setup.py develop
 
   # Done!
   # Run the server.
@@ -88,6 +88,14 @@ Get the source
 .. code-block:: sh
 
  git clone git@github.com:Natim/Thumbnailer.git
+
+Install Python packages
+=======================
+
+Install thumbnailer.core, thumbnailer.engines.images and
+thumbnailer.engines.documents in your Python environment.
+
+You can use provided ``setup.py`` file.
 
 Run
 ===
