@@ -2,20 +2,25 @@
 from PIL import Image
 from thumbnailer.core.utils import download_from_url
 from functools import wraps
-
+import hashlib
+import settings
 from StringIO import StringIO
+
+THUMB_CACHE_DIR = getattr(settings, 'THUMB_CACHE_DIR', '/tmp')
 
 def create_engine(view_func):
     """
     Create the specific engine
     """
     @wraps(view_func)
-    def __wrapped_view(url, width, height):
-        im = Image.open(download_from_url(url))
+    def __wrapped_view(file_obj, url, width, height):
+        im = Image.open(file_obj)
         version = view_func(im, width, height)
-        thumb = StringIO()
+        hash_id = hashlib.sha256(url).hexdigest()
+        cache_file_path = os.path.join(THUMB_CACHE_DIR, hash_id)
+        thumb = open(cache_file_path, 'wb')
         version.save(thumb, 'PNG')
-        return thumb.getvalue()
+        return thumb
 
     return __wrapped_view
         

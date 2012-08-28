@@ -6,8 +6,10 @@ from PIL import Image
 from StringIO import StringIO
 import os.path
 
+from thumbnailer.reader import get_file_for_url
 from thumbnailer.engines.images import images
 from thumbnailer.engines.documents import documents
+from thumbnailer.cache import get_thumb_from_cache
 
 app = Flask(__name__)
 app.debug=True
@@ -41,7 +43,15 @@ def resize(engine):
     else:
         abort(404)
 
-    thumb = THUMBNAILER_ENGINE[engine](url, width, height)
+    # Call the reader
+    file_obj = get_file_for_url(url)
+
+    # If needed we call the engine
+    if not (have_cache_for_url(request.url) and file_obj.is_from_cache):
+        THUMBNAILER_ENGINE[engine](file_obj, request.url, width, height)
+
+    # Get the thumb
+    thumb = get_thumb_from_cache(request.url)
 
     # 3. Returns the image
     response = make_response(thumb)
