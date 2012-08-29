@@ -42,7 +42,6 @@ setup(name=guess_package_name(),
       zip_safe=False,
       install_requires=['setuptools',
                         'thumbnailer.core',
-                        'pydocsplit == 0.2.0',
                         ],
       entry_points="""""",
       )

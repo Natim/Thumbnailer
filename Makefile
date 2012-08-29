@@ -12,7 +12,7 @@ static_server:
 	cd $(ROOT_DIR)/static; python -m SimpleHTTPServer & echo "$$!" > ../$(STATIC_PID_FILE)
 
 provider_server:
-	python src/thumbnailer.core/thumbnailer/core/provider.py & echo "$$!" > $(PROVIDER_PID_FILE)
+	python run.py & echo "$$!" > $(PROVIDER_PID_FILE)
 
 kill_server:
 #Kill server and child processus
@@ -23,3 +23,23 @@ kill_server:
 	  fi;\
 	done
 	-rm -f $(STATIC_PID_FILE) $(PROVIDER_PID_FILE)
+
+install: virtualenv upgrade develop
+	mkdir -p var/input var/thumbs
+
+virtualenv:
+	if [ ! -f $(PYTHON) ]; then \
+            if [[ "`$(VIRTUALENV) --version`" < "`echo '1.8'`" ]]; then \
+                $(VIRTUALENV) --no-site-packages --distribute env; \
+            else \
+                $(VIRTUALENV) env; \
+            fi \
+        fi
+
+upgrade:
+	env/bin/pip install -r requirements.pip
+
+develop:
+	(source env/bin/activate; cd src/thumbnailer.core/; python setup.py develop)
+	(source env/bin/activate; cd src/thumbnailer.engines.documents/; python setup.py develop)
+	(source env/bin/activate; cd src/thumbnailer.engines.images/; python setup.py develop)

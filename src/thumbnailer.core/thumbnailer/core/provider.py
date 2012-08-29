@@ -9,7 +9,7 @@ import os.path
 from thumbnailer.reader import get_file_for_url
 from thumbnailer.engines.images import images
 from thumbnailer.engines.documents import documents
-from thumbnailer.cache import get_thumb_from_cache
+from thumbnailer.cache import get_thumb_from_cache, have_cache_for_url
 
 app = Flask(__name__)
 app.debug=True
@@ -54,7 +54,7 @@ def resize(engine):
     thumb = get_thumb_from_cache(request.url)
 
     # 3. Returns the image
-    response = make_response(thumb)
+    response = make_response(thumb.read())
     response.content_type = 'image/png'
 
     return response

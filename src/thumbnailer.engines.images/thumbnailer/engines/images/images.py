@@ -4,6 +4,7 @@ from thumbnailer.core.utils import download_from_url
 from functools import wraps
 import hashlib
 import settings
+import os
 from StringIO import StringIO
 
 THUMB_CACHE_DIR = getattr(settings, 'THUMB_CACHE_DIR', '/tmp')
