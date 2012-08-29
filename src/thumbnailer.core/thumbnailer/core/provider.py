@@ -57,6 +57,8 @@ def resize(engine):
     response = make_response(thumb.read())
     response.content_type = 'image/png'
 
+    file_obj.close()
+    thumb.close()
     return response
 
 if __name__ == "__main__":

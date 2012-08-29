@@ -7,6 +7,7 @@ import settings
 import requests
 import os
 from wsgiref.handlers import format_date_time
+from tempfile import NamedTemporaryFile
 
 INPUT_CACHE_DIR = getattr(settings, 'INPUT_CACHE_DIR', '/tmp')
 
@@ -27,6 +28,8 @@ def get_file_for_url(url):
         fd.is_from_cache = True
         return fd
     else:
-        fd = StringIO(req.content)
+        fd = NamedTemporaryFile()
+        fd.write(req.content)
         fd.is_from_cache = False
+        fd.seek(0)
         return fd
