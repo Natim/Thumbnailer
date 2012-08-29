@@ -3,17 +3,20 @@
 import hashlib
 import settings
 import os
+import pickle
 
 THUMB_CACHE_DIR = getattr(settings, 'THUMB_CACHE_DIR', '/tmp')
 
-def get_thumb_from_cache(url):
-    """Return the thumb file object related to the URL"""
-    hash_id = hashlib.sha256(url).hexdigest()
-    cache_file_path = os.path.join(THUMB_CACHE_DIR, hash_id)
-    return open(cache_file_path, 'r')
+def get_thumb_path_for_kwargs(**kwargs):
+    """Return the cache file path for url"""
+    dumps = pickle.dumps(kwargs)
+    hash_id = hashlib.sha256(pickle.dumps(kwargs)).hexdigest()
+    return os.path.join(THUMB_CACHE_DIR, hash_id)
 
-def have_cache_for_url(url):
+def get_thumb_from_cache(**kwargs):
+    """Return the thumb file object related to the URL"""
+    return open(get_thumb_path_for_kwargs(**kwargs), 'r')
+
+def have_cache_for_kwargs(**kwargs):
     """Return if the cache exists for this url"""
-    hash_id = hashlib.sha256(url).hexdigest()
-    cache_file_path = os.path.join(THUMB_CACHE_DIR, hash_id)
-    return os.path.exists(cache_file_path)
+    return os.path.exists(get_thumb_path_for_kwargs(**kwargs))

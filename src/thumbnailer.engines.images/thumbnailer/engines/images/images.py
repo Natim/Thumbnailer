@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from PIL import Image
-from thumbnailer.core.utils import download_from_url
+from thumbnailer.cache import get_thumb_path_for_kwargs
 from functools import wraps
 import hashlib
 import settings
@@ -14,11 +14,10 @@ def create_engine(view_func):
     Create the specific engine
     """
     @wraps(view_func)
-    def __wrapped_view(file_obj, url, width, height):
+    def __wrapped_view(file_obj, **kwargs):
         im = Image.open(file_obj)
-        version = view_func(im, width, height)
-        hash_id = hashlib.sha256(url).hexdigest()
-        cache_file_path = os.path.join(THUMB_CACHE_DIR, hash_id)
+        version = view_func(im, kwargs['width'], kwargs['height'])
+        cache_file_path = get_thumb_path_for_kwargs(**kwargs)
         thumb = open(cache_file_path, 'wb')
         version.save(thumb, 'PNG')
         return thumb
