@@ -44,10 +44,10 @@ def resize(engine):
         abort(404)
 
     # Call the reader
-    file_obj = get_file_for_url(url)
+    file_obj, is_from_cache = get_file_for_url(url)
 
     # If needed we call the engine
-    if not (have_cache_for_url(request.url) and file_obj.is_from_cache):
+    if not (have_cache_for_url(request.url) and is_from_cache):
         THUMBNAILER_ENGINE[engine](file_obj, request.url, width, height)
 
     # Get the thumb

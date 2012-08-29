@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 """Read and URL and get the file from cache if possible or update the file."""
-from StringIO import StringIO
 import hashlib
 import datetime
 import settings
@@ -17,19 +16,16 @@ def get_file_for_url(url):
     headers = {}
     cache_file_path = os.path.join(INPUT_CACHE_DIR, hash_id)
     if os.path.exists(cache_file_path):       
-        hash_id_m_time = os.path.getmtime(filename)
-        modified_at = datetime.datetime.fromtimestamp(t)
-        headers = {'If-Modified-Since': format_date_time(modified_at)}        
+        hash_id_m_time = os.path.getmtime(cache_file_path)
+        headers = {'If-Modified-Since': format_date_time(hash_id_m_time)}        
     
     req = requests.get(url, headers=headers)
 
     if req.status_code == 304:
         fd = open(cache_file_path, 'r')
-        fd.is_from_cache = True
-        return fd
+        return fd, True
     else:
-        fd = NamedTemporaryFile()
+        fd = open(cache_file_path, 'r+')
         fd.write(req.content)
-        fd.is_from_cache = False
         fd.seek(0)
-        return fd
+        return fd, False

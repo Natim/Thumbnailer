@@ -35,7 +35,7 @@ def extract_image(file_obj, url, width, height):
     png = '/tmp/%s/%s_1.png' % (size, os.path.basename(pdf_name))
     with open(png) as f:
         io.write(f.read())
-
+    
     for remove_file in list(glob('/tmp/%s/%s*' % (size, pdf_name))) + list(glob('/tmp/%s*' % pdf_name)):
         print remove_file
         os.remove(remove_file)
