@@ -17,15 +17,18 @@ def get_file_for_url(url):
     cache_file_path = os.path.join(INPUT_CACHE_DIR, hash_id)
     if os.path.exists(cache_file_path):       
         hash_id_m_time = os.path.getmtime(cache_file_path)
+        print format_date_time(hash_id_m_time)
         headers = {'If-Modified-Since': format_date_time(hash_id_m_time)}        
     
     req = requests.get(url, headers=headers)
 
-    if req.status_code == 304:
-        fd = open(cache_file_path, 'r')
-        return fd, True
-    else:
-        fd = open(cache_file_path, 'r+')
+    if req.status_code != 304:
+        fd = open(cache_file_path, 'wb')
         fd.write(req.content)
-        fd.seek(0)
-        return fd, False
+        fd.close()
+        cache = False
+    else:
+        cache = True
+
+    fd = open(cache_file_path, 'rb')
+    return fd, cache
