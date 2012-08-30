@@ -44,18 +44,23 @@ def resize(engine):
     else:
         abort(404)
 
-    params['page'] = int(request.args.get('page', 1))
+    try:
+        params['page'] = int(request.args.get('page', 1))
+    except:
+        params['page'] = 1
 
     # Call the reader
     file_obj, is_from_cache = get_file_for_url(params['url'])
-    params['is_from_cache'] = is_from_cache
+
+    if engine == 'document':
+        num_pages = documents.count_pages(file_obj.read())
+        if params['page'] > num_pages or params['page'] < 1:
+            abort(400, 'page not found')
 
     # If needed we call the engine
     if not (have_cache_for_kwargs(**params) and is_from_cache):
         print "CACHE STATUS", is_from_cache, have_cache_for_kwargs(**params), get_thumb_path_for_kwargs(**params)
         num_pages = THUMBNAILER_ENGINE[engine](file_obj, **params) or None
-
-    params.pop('is_from_cache')
 
     # Get the thumb
     thumb = get_thumb_from_cache(**params)
@@ -63,10 +68,6 @@ def resize(engine):
     # 3. Returns the image
     response = make_response(thumb.read())
     response.content_type = 'image/png'
-
-    # Count the number of page
-    if num_pages is None and engine == 'document':
-        num_pages = documents.count_pages(file_obj.read())
 
     if num_pages is not None:        
         response.headers.add('x-thumbnailer-num_pages', str(num_pages))

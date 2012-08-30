@@ -10,7 +10,7 @@ import hashlib
 import re
 
 import settings
-from thumbnailer.cache import get_thumb_path_for_kwargs, have_cache_for_kwargs
+from thumbnailer.cache import get_thumb_path_for_kwargs
 
 THUMB_CACHE_DIR = getattr(settings, 'THUMB_CACHE_DIR', '/tmp')
 
@@ -25,12 +25,8 @@ def extract_image(file_obj, **kwargs):
 
     pdf_name = file_obj.name
 
-    is_from_cache = kwargs.pop('is_from_cache', False)
-
     params = kwargs.copy()
     params['page'] = 1
-    if have_cache_for_kwargs(**params) and is_from_cache:
-        abort(400, 'Page not found %d' % kwargs['page'])
 
     # Extract PDF page as images
     os.rename(pdf_name, '%s.pdf' % pdf_name)
