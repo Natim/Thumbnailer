@@ -16,12 +16,16 @@ app.debug=True
 
 GITHUB_HOME = 'http://github.com/Natim/Thumbnailer/'
 
+THUMBNAILER_READER = get_file_for_url
+
 THUMBNAILER_ENGINE = {
     'scale': images.scale,
     'crop': images.crop,
     'upscale': images.upscale,
     'document': documents.extract_image,
 }
+
+THUMBNAILER_WRITER = get_thumb_from_cache
 
 @app.route('/')
 def home():
@@ -33,7 +37,8 @@ def resize(engine):
     # 1. Get the image or raise 404    
     params = {'url': request.args.get('url', None),
               'width': int(request.args.get('width', 0)),
-              'height': int(request.args.get('height', 0))}
+              'height': int(request.args.get('height', 0)),
+              'engine': engine}
 
     if params['width'] == 0 and params['height'] == 0:
         abort(400, u'You must set either width or height')
@@ -50,7 +55,7 @@ def resize(engine):
         params['page'] = 1
 
     # Call the reader
-    file_obj, is_from_cache = get_file_for_url(params['url'])
+    file_obj, is_from_cache = THUMBNAILER_READER(params['url'])
 
     if engine == 'document':
         num_pages = documents.count_pages(file_obj.read())
@@ -63,7 +68,7 @@ def resize(engine):
         num_pages = THUMBNAILER_ENGINE[engine](file_obj, **params) or None
 
     # Get the thumb
-    thumb = get_thumb_from_cache(**params)
+    thumb = THUMBNAILER_WRITER(**params)
 
     # 3. Returns the image
     response = make_response(thumb.read())

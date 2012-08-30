@@ -16,6 +16,29 @@ def get_input_path_for_url(url):
     return os.path.join(INPUT_CACHE_DIR, hash_id)
 
 def get_file_for_url(url):
+    """Return the good reader for the file"""
+    if url.endswith('original'):
+        return get_sae_file_for_url(url)
+    else:
+        return get_file_for_normal_url(url)
+
+def get_sae_file_for_url(url):
+    """Return the file object related to the URL"""
+    headers = {}
+    cache_file_path = get_input_path_for_url(url)
+    if not os.path.exists(cache_file_path):       
+        req = requests.get(url, headers=headers)
+        fd = open(cache_file_path, 'wb')
+        fd.write(req.content)
+        fd.close()
+        cache = False
+    else:
+        cache = True
+
+    fd = open(cache_file_path, 'rb')
+    return fd, cache
+
+def get_file_for_normal_url(url):
     """Return the file object related to the URL"""
     headers = {}
     cache_file_path = get_input_path_for_url(url)
