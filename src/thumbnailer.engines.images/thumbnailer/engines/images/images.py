@@ -16,6 +16,7 @@ def create_engine(view_func):
     """
     @wraps(view_func)
     def __wrapped_view(file_obj, **kwargs):
+        is_from_cache = kwargs.pop('is_from_cache', False)
         try:
             im = Image.open(file_obj)
         except:

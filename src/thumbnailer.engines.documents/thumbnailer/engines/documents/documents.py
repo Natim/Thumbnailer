@@ -25,9 +25,11 @@ def extract_image(file_obj, **kwargs):
 
     pdf_name = file_obj.name
 
+    is_from_cache = kwargs.pop('is_from_cache', False)
+
     params = kwargs.copy()
     params['page'] = 1
-    if have_cache_for_kwargs(**params):
+    if have_cache_for_kwargs(**params) and is_from_cache:
         abort(400, 'Page not found %d' % kwargs['page'])
 
     # Extract PDF page as images
@@ -59,3 +61,8 @@ def extract_image(file_obj, **kwargs):
         os.remove(remove_file)
 
     return len(pngs)
+
+rxcountpages = re.compile(r"/Type\s*/Page([^s]|$)", re.MULTILINE|re.DOTALL)
+
+def count_pages(data):
+    return len(rxcountpages.findall(data))
