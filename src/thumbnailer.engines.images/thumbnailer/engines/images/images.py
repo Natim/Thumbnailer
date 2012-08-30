@@ -6,6 +6,7 @@ import hashlib
 import settings
 import os
 from StringIO import StringIO
+from flask import abort
 
 THUMB_CACHE_DIR = getattr(settings, 'THUMB_CACHE_DIR', '/tmp')
 
@@ -15,7 +16,11 @@ def create_engine(view_func):
     """
     @wraps(view_func)
     def __wrapped_view(file_obj, **kwargs):
-        im = Image.open(file_obj)
+        try:
+            im = Image.open(file_obj)
+        except:
+            os.remove(file_obj.name)
+            return abort(400, "cannot identify image file")
         version = view_func(im, kwargs['width'], kwargs['height'])
         cache_file_path = get_thumb_path_for_kwargs(**kwargs)
         thumb = open(cache_file_path, 'wb')
