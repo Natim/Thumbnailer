@@ -52,12 +52,10 @@ def extract_image(file_obj, **kwargs):
             cache_file.write(f.read())
         cache_file.close()
         # print page_cache_file_path, params['page']
+    print len(pngs)
         
     remove_list = pngs
     for remove_file in remove_list:
         os.remove(remove_file)
 
-    cache_file_path = get_thumb_path_for_kwargs(**kwargs)
-    # print cache_file_path
-    io = open(cache_file_path, 'r')
-    return io
+    return len(pngs)

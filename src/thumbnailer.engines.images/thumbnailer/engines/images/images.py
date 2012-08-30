@@ -25,7 +25,8 @@ def create_engine(view_func):
         cache_file_path = get_thumb_path_for_kwargs(**kwargs)
         thumb = open(cache_file_path, 'wb')
         version.save(thumb, 'PNG')
-        return thumb
+        thumb.close()
+        return 1
 
     return __wrapped_view
         
