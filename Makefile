@@ -1,6 +1,7 @@
 ROOT_DIR=$(PWD)
 STATIC_PID_FILE=run/static_server.pid
 PROVIDER_PID_FILE=run/provider_server.pid
+VIRTUALENV=virtualenv
 
 test: runserver
 	sleep 2
@@ -40,6 +41,6 @@ upgrade:
 	env/bin/pip install -r requirements.pip
 
 develop:
-	(source env/bin/activate; cd src/thumbnailer.core/; python setup.py develop)
-	(source env/bin/activate; cd src/thumbnailer.engines.documents/; python setup.py develop)
-	(source env/bin/activate; cd src/thumbnailer.engines.images/; python setup.py develop)
+	(cd src/thumbnailer.core/; ../../env/bin/python setup.py develop)
+	(cd src/thumbnailer.engines.documents/; ../../env/bin/python setup.py develop)
+	(cd src/thumbnailer.engines.images/; ../../env/bin/python setup.py develop)
