@@ -26,6 +26,8 @@ def extract_image(file_obj, **kwargs):
     pdf_name = file_obj.name
 
     params = kwargs.copy()
+    if 'max_previews' in params:
+        del params['max_previews']
     params['page'] = 1
 
     # Extract PDF page as images
@@ -44,6 +46,7 @@ def extract_image(file_obj, **kwargs):
         m = re.search('_(\d+)\.png$', page_png)
         page_number = int(m.group(1))
         params['page'] = page_number
+        print params
         page_cache_file_path = get_thumb_path_for_kwargs(**params)
         cache_file = open(page_cache_file_path, 'w')
         with open(page_png, 'r') as f:
@@ -61,4 +64,5 @@ def extract_image(file_obj, **kwargs):
 rxcountpages = re.compile(r"/Type\s*/Page([^s]|$)", re.MULTILINE|re.DOTALL)
 
 def count_pages(data):
+    """Returns the number of pages of a PDF"""
     return len(rxcountpages.findall(data))

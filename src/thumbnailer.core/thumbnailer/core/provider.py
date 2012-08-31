@@ -1,14 +1,6 @@
 from flask import abort, Flask, request, make_response, redirect
 
-import requests
-
-from PIL import Image
-from StringIO import StringIO
-import os.path
-
 from thumbnailer.reader import get_file_for_url
-from thumbnailer.engines.images import images
-from thumbnailer.engines.documents import documents
 from thumbnailer.cache import get_thumb_from_cache, have_cache_for_kwargs, get_thumb_path_for_kwargs
 
 app = Flask(__name__)
@@ -16,12 +8,25 @@ app.debug=True
 
 GITHUB_HOME = 'http://github.com/Natim/Thumbnailer/'
 
-THUMBNAILER_ENGINE = {
-    'scale': images.scale,
-    'crop': images.crop,
-    'upscale': images.upscale,
-    'document': documents.extract_image,
-}
+THUMBNAILER_ENGINE = {}
+
+try:
+    from thumbnailer.engines.images import images
+    THUMBNAILER_ENGINE.update({
+        'scale': images.scale,
+        'crop': images.crop,
+        'upscale': images.upscale,
+        })
+except ImportError:
+    print "thumbnailer.engines.images was not found"
+
+try:
+    from thumbnailer.engines.documents import documents
+    THUMBNAILER_ENGINE.update({
+        'document': documents.extract_image,
+        })
+except ImportError:
+    print "thumbnailer.engines.images was not found"
 
 @app.route('/')
 def home():
